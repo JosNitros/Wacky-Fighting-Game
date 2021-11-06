@@ -159,6 +159,7 @@
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\image.fs" />
