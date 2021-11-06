@@ -33,6 +33,8 @@ int main()
         return -1;
     }
 
+    initRenderer();
+
     int frames = 0;
     int fps = 0;
 
