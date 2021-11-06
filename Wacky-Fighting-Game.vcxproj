@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="libs\include\glad\glad.h" />
     <ClInclude Include="render.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="libs\include\glad\glad.c" />
     <ClCompile Include="main.cpp" />
@@ -162,6 +164,8 @@
     <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\animation.fs" />
+    <None Include="shaders\animation.vs" />
     <None Include="shaders\image.fs" />
     <None Include="shaders\image.vs" />
     <None Include="shaders\screen.fs" />

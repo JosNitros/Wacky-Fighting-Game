@@ -7,7 +7,7 @@
 #include "game.h"
 #include "render.h"
 
-#define TARGET_FPS 144
+#define TARGET_FPS 60
 
 GLFWwindow* window;
 

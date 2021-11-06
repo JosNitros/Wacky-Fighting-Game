@@ -1,68 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{ef1d98f1-62a5-4fff-86d2-b2e17bf08466}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="libs\include\glad\glad.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="render.cpp" />
+    <ClCompile Include="shaders.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="text.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="fighter.cpp" />
+    <ClCompile Include="animation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libs\include\glad\glad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shaders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="libs\include\glad\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shaders.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.cpp">
-    <ClCompile Include="fighter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="libs\include\glad\glad.h" />
+    <ClInclude Include="render.h" />
+    <ClInclude Include="shaders.h" />
+    <ClInclude Include="text.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="animation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\image.fs">
@@ -83,5 +40,16 @@
     <None Include="shaders\text.vs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\animation.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\animation.vs">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{5d3c80f0-5a70-4bdd-bbdb-e6e721b82334}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
