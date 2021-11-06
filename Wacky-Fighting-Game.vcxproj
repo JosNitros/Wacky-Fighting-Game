@@ -154,6 +154,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="shaders.cpp" />
+    <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\image.fs" />
