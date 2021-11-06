@@ -143,11 +143,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="game.h" />
     <ClInclude Include="libs\include\glad\glad.h" />
+    <ClInclude Include="render.h" />
+    <ClInclude Include="shaders.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="libs\include\glad\glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="render.cpp" />
+    <ClCompile Include="shaders.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\image.fs" />
+    <None Include="shaders\image.vs" />
+    <None Include="shaders\screen.fs" />
+    <None Include="shaders\screen.vs" />
+    <None Include="shaders\text.fs" />
+    <None Include="shaders\text.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

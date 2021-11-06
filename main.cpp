@@ -7,6 +7,8 @@
 #include "game.h"
 #include "render.h"
 
+#define TARGET_FPS 144
+
 GLFWwindow* window;
 
 int main()
@@ -30,6 +32,8 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
+    initRenderer();
 
     int frames = 0;
     int fps = 0;
@@ -66,10 +70,10 @@ int main()
 
         glfwSwapBuffers(window);
 
-        double expectedFrame = (nowTime - frameTimer) * globals::target_fps;
+        double expectedFrame = (nowTime - frameTimer) * TARGET_FPS;
         if (frames > expectedFrame)
         {
-            long fix = floor((frames - expectedFrame) * (1000.0 / globals::target_fps));
+            long fix = floor((frames - expectedFrame) * (1000.0 / TARGET_FPS));
             std::this_thread::sleep_for(std::chrono::milliseconds(fix));
         }
 
