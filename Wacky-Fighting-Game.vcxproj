@@ -147,6 +147,8 @@
     <ClInclude Include="libs\include\glad\glad.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="shaders.h" />
+    <ClInclude Include="text.h" />
+    <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
@@ -154,6 +156,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="shaders.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="text.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\image.fs" />
