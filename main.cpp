@@ -7,7 +7,7 @@
 #include "game.h"
 #include "render.h"
 
-#define TARGET_FPS 144
+#define TARGET_FPS 60
 
 GLFWwindow* window;
 
@@ -18,7 +18,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(800, 600, "TEST", NULL, NULL);
+    window = glfwCreateWindow(1280, 720, "TEST", NULL, NULL);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW windows" << std::endl;
@@ -32,6 +32,9 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     initRenderer();
 

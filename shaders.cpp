@@ -177,12 +177,15 @@ std::map<std::string, shader> shaders;
 bool compileShaders()
 {
 	bool success = true;
-	glm::mat4 projection = glm::ortho(0.0f, (float)800, (float)600, 0.0f, -5.0f, 5.0f);
+	glm::mat4 projection = glm::ortho(0.0f, (float)1280, (float)720, 0.0f, -5.0f, 5.0f);
 
+    success &= shaders.insert(std::pair<std::string, shader>("animation", shader("shaders/animation.vs", "shaders/animation.fs"))).second;
 	success &= shaders.insert(std::pair<std::string, shader>("image", shader("shaders/image.vs", "shaders/image.fs"))).second;
     success &= shaders.insert(std::pair<std::string, shader>("screen", shader("shaders/screen.vs", "shaders/screen.fs"))).second;
 	success &= shaders.insert(std::pair<std::string, shader>("text", shader("shaders/text.vs", "shaders/text.fs"))).second;
 
+    shaders.at("animation").use();
+    shaders.at("animation").setMat4("projection", projection);
 	shaders.at("screen").use();
 	shaders.at("screen").setMat4("projection", projection);
 	shaders.at("image").use();
