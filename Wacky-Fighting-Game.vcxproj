@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="fighter.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="libs\include\glad\glad.h" />
     <ClInclude Include="render.h" />
@@ -154,7 +155,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="shaders.cpp" />
-    <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\image.fs" />
