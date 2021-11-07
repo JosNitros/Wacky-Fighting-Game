@@ -8,17 +8,46 @@ fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f), true);
 double timer = 99;
 bool over = false;
 
-bool detect_hit1(fighter* fighter1, fighter* fighter2) {
+inline bool detect_hit1(fighter* fighter1, fighter* fighter2) {
     return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x
         && fighter1->hitbox.dimensions.y > 0);
 }
 
-bool detect_hit2(fighter* fighter1, fighter* fighter2) {
+inline bool detect_hit2(fighter* fighter1, fighter* fighter2) {
     return (fighter2->position.x + fighter2->hitbox.position.x <= fighter1->position.x + fighter1->hurtbox.position.x + fighter1->hurtbox.dimensions.x 
         && fighter2->hitbox.dimensions.y > 0);
 }
 
+bool debug = false;
+void toggleDebug()
+{
+    debug = !debug;
+};
+
+bool conTroll = false;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (action == GLFW_PRESS && key == GLFW_KEY_LEFT_CONTROL)
+    {
+        conTroll = true;
+        return;
+    }
+    else if (action == GLFW_PRESS && key == GLFW_KEY_R && conTroll)
+    {
+        restart();
+        return;
+    }
+    else if (action == GLFW_PRESS && key == GLFW_KEY_G && conTroll)
+    {
+        toggleDebug();
+        return;
+    }
+
+    if (action == GLFW_RELEASE && key == GLFW_KEY_LEFT_CONTROL)
+    {
+        conTroll = false;
+        return;
+    }
+
     if (action == GLFW_PRESS && !over)
     {
         switch (key) {
@@ -104,7 +133,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     else if (action == GLFW_RELEASE && !over)
     {
         switch (key) {
-
             case GLFW_KEY_LEFT_SHIFT:
                 fighter1->shift = false;
                 if (fighter1->velocity.x > 0)
@@ -166,6 +194,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 int sframes = 0;
+void restart()
+{
+    sframes = 0;
+    delete fighter1;
+    delete fighter2;
+    fighter1 = new fighter(glm::vec2(-100.0f, 385.0f), false);
+    fighter2 = new fighter(glm::vec2(975.0f, 385.0f), true);
+    timer = 99;
+    over = false;
+}
+
 void doGameTick(double dt)
 {
     if (sframes > 0) sframes--;
@@ -268,7 +307,7 @@ void doGameTick(double dt)
 
     if (fighter1->health <= 0.0 || fighter2->health <= 0.0 || timer <= 0.0)
     {
-        timer = 0.0;
+        timer = -1.0;
 
         if (fighter1->health <= 0.0)
         {
@@ -305,6 +344,11 @@ double getTimer()
 bool getOver()
 {
     return over;
+}
+
+bool getDebug()
+{
+    return debug;
 }
 
 fighter* getPlayer1()

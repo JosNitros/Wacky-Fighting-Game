@@ -8,6 +8,8 @@
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+void restart();
+
 void doGameTick(double dt);
 
 int getShakeFrames();
@@ -15,6 +17,8 @@ int getShakeFrames();
 double getTimer();
 
 bool getOver();
+
+bool getDebug();
 
 fighter* getPlayer1();
 fighter* getPlayer2();

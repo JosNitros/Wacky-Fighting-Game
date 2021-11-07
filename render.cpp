@@ -125,25 +125,28 @@ void drawGame()
 	}
 	//renderText(font, shaders->at("text"), "Cool pile", 300, 300, 1280, 720, 2.0, glm::vec3(1.0f));
 
-	renderText(font, shaders->at("text"), std::to_string((int)(getTimer())), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));
+	renderText(font, shaders->at("text"), std::to_string((int)(getTimer()) + 1), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));
 
 	glBindVertexArray(VAO);
 	p1->draw(0);
 	p2->draw(3);
 	
 	
-	box tmp = box(p1->hitbox.position + p1->position, p1->hitbox.dimensions);
-	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
-	tmp = box(p2->hitbox.position + p2->position, p2->hitbox.dimensions);
-	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
+	if (getDebug())
+	{
+		box hbtmp = box(p1->hitbox.position + p1->position, p1->hitbox.dimensions);
+		drawBox(hbtmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
+		hbtmp = box(p2->hitbox.position + p2->position, p2->hitbox.dimensions);
+		drawBox(hbtmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
 
-	tmp = box(p1->hurtbox.position + p1->position, p1->hurtbox.dimensions);
-	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
-	tmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
-	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
+		hbtmp = box(p1->hurtbox.position + p1->position, p1->hurtbox.dimensions);
+		drawBox(hbtmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
+		hbtmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
+		drawBox(hbtmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
+	}
 	
 
-	tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
+	box tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
 
 	tmp = box(glm::vec2(1280.0f - 500.0f * (p2->health / 100.0f), 0.0f), glm::vec2(500.0f * (p2->health / 100.0f), 75.0f));
