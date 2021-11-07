@@ -12,6 +12,8 @@ struct box {
 };
 
 struct fighter {
+	float health = 100;
+
 	//position
 	glm::vec2 position;
 	bool facingLeft = false;

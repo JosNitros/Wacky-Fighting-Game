@@ -3,8 +3,16 @@
 #define WALKSPEED 5.0
 #define RUNSPEED 7.0
 
-fighter* fighter1 = new fighter(glm::vec2(-100.0f, 300.0f),false);
-fighter* fighter2 = new fighter(glm::vec2(975.0f, 300.0f),true);
+fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
+fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
+
+bool detect_hit1(fighter* fighter1, fighter* fighter2) {
+    return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x);
+}
+
+bool detect_hit2(fighter* fighter1, fighter* fighter2) {
+    return (fighter2->position.x + fighter2->hitbox.position.x <= fighter1->position.x + fighter1->hurtbox.position.x + fighter1->hurtbox.dimensions.x);
+}
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto animations = getAnimations();
@@ -142,6 +150,16 @@ void doGameTick(double dt)
 {
     fighter1->update();
     fighter2->update();
+
+    if (detect_hit1(fighter1, fighter2) && fighter1->attacking) {
+        fighter2->isHit = true;
+        fighter2->health -= 10.0f;
+    }
+
+    if (detect_hit2(fighter1, fighter2) && fighter2->attacking) {
+        fighter1->isHit = true;
+        fighter1->health -= 10.0f;
+    }
 }
 
 fighter* getPlayer1()
