@@ -3,8 +3,8 @@
 #define WALKSPEED 5.0
 #define RUNSPEED 7.0
 
-fighter* fighter1 = new fighter(glm::vec2(-100.0f, 300.0f));
-fighter* fighter2 = new fighter(glm::vec2(975.0f, 300.0f));
+fighter* fighter1 = new fighter(glm::vec2(-100.0f, 300.0f),false);
+fighter* fighter2 = new fighter(glm::vec2(975.0f, 300.0f),true);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto animations = getAnimations();

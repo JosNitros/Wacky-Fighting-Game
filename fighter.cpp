@@ -1,7 +1,7 @@
 #include "fighter.h"
 
-fighter::fighter(glm::vec2 position) :
-	position(position) {};
+fighter::fighter(glm::vec2 position, bool facingLeft) :
+	position(position), facingLeft(facingLeft) {};
 
 void fighter::move(glm::vec2 vel)
 {
@@ -29,7 +29,23 @@ void fighter::attack()
 	{
 		attacking = true;
 		velocity.x = 0.0f;
-		setAnim(getAnimations().at("attack1"));
+		if (facingLeft)
+		{
+			hitbox.position.x -= 150;
+			hurtbox.position.x -= 90;
+
+			hitbox.dimensions.x = 230;
+			hitbox.dimensions.y = 100;
+			hurtbox.dimensions.x = 170;
+		}
+		else
+		{
+			hitbox.dimensions.x = 230;
+			hitbox.dimensions.y = 100;
+			hurtbox.dimensions.x = 170;
+		}
+
+		setAnim(getAnimations().at("attack2"));
 		stopFrames = 8 * 4;
 	}
 }
@@ -65,6 +81,8 @@ void fighter::update() {
 	}
 	else if (stopFrames == 1)
 	{
+		hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
+		hurtbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(80.0f, 100.0f));
 		stopFrames = 0;
 		setAnim(getAnimations().at("idle"));
 		attacking = false;
