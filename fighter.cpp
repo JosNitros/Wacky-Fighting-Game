@@ -61,15 +61,15 @@ void fighter::grab()
 			//hitbox.dimensions.x = 230;
 			//hitbox.dimensions.y = 100;
 			//hitbox.position.x -= 150;
-			hurtbox.position.x -= 60;
 
-			hurtbox.dimensions.x = 140;
+			hurtbox.position.x -= 90;
+			hurtbox.dimensions.x = 170;
 		}
 		else
 		{
 			//hitbox.dimensions.x = 230;
 			//hitbox.dimensions.y = 100;
-			hurtbox.dimensions.x = 140;
+			hurtbox.dimensions.x = 170;
 		}
 
 		setAnim(getAnimations().at("attack1"));
@@ -178,15 +178,15 @@ void fighter::update() {
 		}
 
 		if (grabbing && facingLeft && stopFrames == 20) {
-			hitbox.position.x -= 60;
+			hitbox.position.x -= 90;
 		}
 
 		if (grabbing && facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 140;
+			hitbox.dimensions.x = 170;
 			hitbox.dimensions.y = 100;
 		}
 		if (grabbing && !facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 140;
+			hitbox.dimensions.x = 170;
 			hitbox.dimensions.y = 100;
 		}
 
