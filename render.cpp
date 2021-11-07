@@ -8,6 +8,8 @@
 #include "text.h"
 #include "animation.h"
 
+#include "game.h"
+
 const float vertices[] = {
 	0.0f, 1.0f,
 	1.0f, 0.0f,
@@ -70,11 +72,14 @@ void drawGame()
 
 	//@ TODO
 
+	fighter* p1 = getPlayer1();
+	fighter* p2 = getPlayer2();
+
 	renderText(font, shaders->at("text"), "Cum", 300, 300, 1280, 720, 2.0, glm::vec3(1.0));
 
 	glBindVertexArray(VAO);
-	animations.at("attack2")->draw(tf1, glm::vec2(100.0f, 100.0f), glm::vec2(400.0f, 400.0f), 2);
-	animations.at("attack2")->draw(tf2, glm::vec2(100.0f, 300.0f), glm::vec2(400.0f, 400.0f), 1);
+	animations.at("run")->draw(tf1, p1->position, glm::vec2(400.0f, 400.0f), 0);
+	animations.at("run")->draw(tf2, p2->position, glm::vec2(400.0f, 400.0f), 3);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glFinish();

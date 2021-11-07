@@ -5,7 +5,7 @@ struct fighter {
 	//position
 	glm::vec2 position;
 	glm::vec2 dimensions;
-	glm::vec2 velocity = glm::vec2(10.0f, 10.0f);
+	glm::vec2 velocity = glm::vec2(0.0f, 0.0f);
 
 	//states
 	bool idle = true;
@@ -34,7 +34,7 @@ struct fighter {
 		idle = false;
 		walk = false;
 		run = false;
-		shift = false;
+		
 		isHit = false;
 		attacking = false;
 		blocking = false;
