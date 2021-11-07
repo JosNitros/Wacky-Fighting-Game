@@ -56,9 +56,24 @@ void fighter::block()
 	{
 		blocking = true;
 		velocity.x = 0.0f;
-		setAnim(getAnimations().at("death"));
-		stopFrames = 8 * 4;
+		setAnim(getAnimations().at("idle"));
+		stopFrames = 5;
 	}
+}
+
+void fighter::blockedAttack()
+{
+		velocity.x = 0.0f;
+		setAnim(getAnimations().at("takehit"));
+		if (!facingLeft) {
+			position += glm::vec2(-40.0f, 0.0f);
+
+		}
+		else {
+			position += glm::vec2(40.0f, 0.0f);
+		}
+		stopFrames = 16;
+		blockedATK = true;
 }
 
 void fighter::bump()
@@ -150,6 +165,6 @@ void fighter::update() {
 
 void fighter::setAnim(animSequence* animS)
 {
-	anim = animS;
-	af = 0;
+		anim = animS;
+		af = 0;
 }
