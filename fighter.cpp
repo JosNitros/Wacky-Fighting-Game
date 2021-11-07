@@ -61,6 +61,22 @@ void fighter::block()
 	}
 }
 
+void fighter::bump()
+{
+	if (stopFrames == 0) {
+		velocity.x = 0.0f;
+		setAnim(getAnimations().at("takehit"));
+		if (!facingLeft) {
+			position += glm::vec2(-40.0f, 0.0f);
+			
+		}
+		else {
+			position += glm::vec2(40.0f, 0.0f);
+		}
+		stopFrames = 16;
+	}
+}
+
 void fighter::hit()
 {
 	if (!isHit)
