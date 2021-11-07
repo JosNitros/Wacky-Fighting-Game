@@ -101,16 +101,16 @@ void fighter::update() {
 	if (stopFrames > 1)
 	{
 		if (attacking && facingLeft && stopFrames == 20) {
-			hitbox.position.x -= 150;
+			hitbox.position.x -= 140;
 		}
 
 		if (attacking && facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 230;
+			hitbox.dimensions.x = 220;
 			hitbox.dimensions.y = 100;
 		}
 
 		if (attacking && !facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 230;
+			hitbox.dimensions.x = 220;
 			hitbox.dimensions.y = 100;
 		}
 		if (attacking && stopFrames <= 15) {
