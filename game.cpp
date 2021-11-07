@@ -6,6 +6,7 @@
 fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
 fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
 double timer = 99;
+bool over = false;
 
 bool detect_hit1(fighter* fighter1, fighter* fighter2) {
     return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x
@@ -19,7 +20,7 @@ bool detect_hit2(fighter* fighter1, fighter* fighter2) {
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto animations = getAnimations();
-    if (action == GLFW_PRESS)
+    if (action == GLFW_PRESS && !over)
     {
         switch (key) {
             case GLFW_KEY_LEFT_SHIFT:
@@ -93,7 +94,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 break;
         }
     }
-    else if (action == GLFW_RELEASE)
+    else if (action == GLFW_RELEASE && !over)
     {
         switch (key) {
 
@@ -149,7 +150,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-bool over = false;
 void doGameTick(double dt)
 {
     if (over)
@@ -219,6 +219,11 @@ void doGameTick(double dt)
 double getTimer()
 {
     return timer;
+}
+
+bool getOver()
+{
+    return over;
 }
 
 fighter* getPlayer1()
