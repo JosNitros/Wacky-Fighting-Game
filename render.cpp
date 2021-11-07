@@ -76,6 +76,23 @@ void drawBox(box& obj, glm::vec4 color)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+void drawBG()
+{
+	auto bg = getTextures()->at("background");
+	auto shdr = getShaders()->at("image");
+
+	shdr.use();
+
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(1280.0f, 720, 1.0f));
+
+	shdr.setMat4("model", model);
+	
+	glBindVertexArray(VAO);
+	glBindTexture(GL_TEXTURE_2D, bg.ID);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 void drawGame()
 {
 	auto shaders = getShaders();
@@ -85,7 +102,7 @@ void drawGame()
 	glClearColor(1.0f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//@ TODO
+	drawBG();
 
 	fighter* p1 = getPlayer1();
 	fighter* p2 = getPlayer2();
