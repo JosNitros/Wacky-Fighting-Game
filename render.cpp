@@ -131,7 +131,7 @@ void drawGame()
 	p1->draw(0);
 	p2->draw(3);
 	
-	
+	/*
 	box tmp = box(p1->hitbox.position + p1->position, p1->hitbox.dimensions);
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
 	tmp = box(p2->hitbox.position + p2->position, p2->hitbox.dimensions);
@@ -141,9 +141,9 @@ void drawGame()
 	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
 	tmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
 	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
-	
+	*/
 
-	tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
+	box tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
 
 	tmp = box(glm::vec2(1280.0f - 500.0f * (p2->health / 100.0f), 0.0f), glm::vec2(500.0f * (p2->health / 100.0f), 75.0f));
@@ -153,6 +153,7 @@ void drawGame()
 	glFinish();
 }
 
+int flags = 0;
 void render()
 {
 	auto shaders = getShaders();
@@ -160,10 +161,13 @@ void render()
 	shaders->at("box").setFloat("time", glfwGetTime());
 	drawGame();
 
-	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	shaders->at("screen").use();
+
+	shaders->at("screen").setInt("flags", flags | (getShakeFrames() > 0));
+	shaders->at("screen").setFloat("time", glfwGetTime());
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(1280.0f, 720, 1.0f));

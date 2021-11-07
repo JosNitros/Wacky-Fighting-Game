@@ -149,8 +149,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+int sframes = 0;
 void doGameTick(double dt)
 {
+    if (sframes > 0) sframes--;
+
     if (over)
     {
         if (fighter1->health <= 0.0)
@@ -181,11 +184,13 @@ void doGameTick(double dt)
 
     if (hit2)
     {
+        sframes = 8;
         fighter2->hit();
     }
 
     if (hit1)
     {
+        sframes = 8;
         fighter1->hit();
     }
 
@@ -196,7 +201,8 @@ void doGameTick(double dt)
     if (fighter2->position.x > 1040) {
         fighter2->position.x = 1040;
     }
-    if (fighter1->position.x + 80 > fighter2-> position.x) {
+    if (fighter1->position.x + 55 > fighter2->position.x) {
+        sframes = 8;
         fighter1->bump();
         fighter2->bump();
     }
@@ -226,6 +232,11 @@ void doGameTick(double dt)
 
         over = true;
     }
+}
+
+int getShakeFrames()
+{
+    return sframes;
 }
 
 double getTimer()
