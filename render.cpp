@@ -87,7 +87,7 @@ void drawBG()
 	model = glm::scale(model, glm::vec3(1280.0f, 720, 1.0f));
 
 	shdr.setMat4("model", model);
-	
+
 	glBindVertexArray(VAO);
 	glBindTexture(GL_TEXTURE_2D, bg.ID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -97,7 +97,6 @@ void drawGame()
 {
 	auto shaders = getShaders();
 	auto textures = getTextures();
-	auto animations = getAnimations();
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	glClearColor(1.0f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

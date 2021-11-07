@@ -3,8 +3,8 @@
 #define WALKSPEED 5.0
 #define RUNSPEED 7.0
 
-fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
-fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
+fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f), false);
+fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f), true);
 double timer = 99;
 bool over = false;
 
@@ -19,7 +19,6 @@ bool detect_hit2(fighter* fighter1, fighter* fighter2) {
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    auto animations = getAnimations();
     if (action == GLFW_PRESS && !over)
     {
         switch (key) {
