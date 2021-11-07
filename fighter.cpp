@@ -14,7 +14,7 @@ void fighter::move(glm::vec2 vel)
 		}
 		else if (vel.x < 0)
 		{
-			setAnim(getAnimations().at("run")); //@ TODO reverse
+			setAnim(getAnimations().at("run"));
 		}
 		else
 		{
