@@ -50,6 +50,33 @@ void fighter::attack()
 	}
 }
 
+void fighter::grab()
+{
+	if (stopFrames == 0)
+	{
+		grabbing = true;
+		velocity.x = 0.0f;
+		if (facingLeft)
+		{
+			//hitbox.dimensions.x = 230;
+			//hitbox.dimensions.y = 100;
+			//hitbox.position.x -= 150;
+			hurtbox.position.x -= 60;
+
+			hurtbox.dimensions.x = 140;
+		}
+		else
+		{
+			//hitbox.dimensions.x = 230;
+			//hitbox.dimensions.y = 100;
+			hurtbox.dimensions.x = 140;
+		}
+
+		setAnim(getAnimations().at("attack1"));
+		stopFrames = 40;
+	}
+}
+
 void fighter::block()
 {
 	if (stopFrames == 0)
@@ -109,6 +136,8 @@ void fighter::hit()
 
 		isHit = true;
 		attacking = false;
+		blocking = false;
+		parrying = false;
 		health -= 10.0f;
 		setAnim(getAnimations().at("takehitW"));
 		stopFrames = 4 * 4;
@@ -148,6 +177,23 @@ void fighter::update() {
 			hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
 		}
 
+		if (grabbing && facingLeft && stopFrames == 20) {
+			hitbox.position.x -= 60;
+		}
+
+		if (grabbing && facingLeft && stopFrames <= 20) {
+			hitbox.dimensions.x = 140;
+			hitbox.dimensions.y = 100;
+		}
+		if (grabbing && !facingLeft && stopFrames <= 20) {
+			hitbox.dimensions.x = 140;
+			hitbox.dimensions.y = 100;
+		}
+
+		if (grabbing && stopFrames <= 15) {
+			hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
+		}
+
 
 		stopFrames--;
 	}
@@ -160,6 +206,8 @@ void fighter::update() {
 		attacking = false;
 		blocking = false;
 		isHit = false;
+		grabbing = false;
+		parrying = false;
 	}
 }
 
