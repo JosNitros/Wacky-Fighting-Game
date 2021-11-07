@@ -40,6 +40,11 @@ texture2D loadTextureFromFile(const char* file, bool alpha)
         texture.Internal_Format = GL_RGBA;
         texture.Image_Format = GL_RGBA;
     }
+    else
+    {
+        texture.Internal_Format = GL_RGB;
+        texture.Image_Format = GL_RGB;
+    }
     // load image
     int width, height, nrChannels;
     unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
@@ -52,7 +57,7 @@ texture2D loadTextureFromFile(const char* file, bool alpha)
 
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, texture.Image_Format, width, height, 0, texture.Internal_Format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -99,7 +104,10 @@ void loadTextures()
 
     thang = loadTextureFromFile("assets/Martial-Hero/Sprites/TakeHitW.png", true);
     textures.insert(std::pair<std::string, texture2D>("takehitW", thang));
-    // @TODO
+    
+
+    thang = loadTextureFromFile("assets/bg/Background.png", false);
+    textures.insert(std::pair<std::string, texture2D>("background", thang));
 }
 
 std::map<std::string, texture2D>* getTextures()
