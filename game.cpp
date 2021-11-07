@@ -145,6 +145,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                     fighter2->move(glm::vec2(0.0f, fighter2->velocity.y));
                 }
                 break;
+
+            case GLFW_KEY_S:
+                fighter1->blocking = false;
+                break;
+
+            case GLFW_KEY_K:
+                fighter2->blocking = false;
+                break;
         }
     }
 }
@@ -179,19 +187,36 @@ void doGameTick(double dt)
     fighter1->update();
     fighter2->update();
 
+    if (fighter1->blocking) {
+        fighter1->stopFrames = 6;
+    }
+    if (fighter2->blocking) {
+        fighter2->stopFrames = 6;
+    }
+
     bool hit2 = detect_hit1(fighter1, fighter2) && fighter1->attacking;
     bool hit1 = detect_hit2(fighter1, fighter2) && fighter2->attacking;
 
-    if (hit2)
+    if (hit2 && !fighter2->blocking && !fighter2->parrying)
     {
         sframes = 8;
         fighter2->hit();
     }
 
-    if (hit1)
+    if (hit1 && !fighter1->blocking && !fighter1->parrying)
     {
         sframes = 8;
         fighter1->hit();
+    }
+
+    if (hit2 && fighter2->blocking)
+    {
+        fighter2->blockedAttack();
+    }
+
+    if (hit1 && fighter1->blocking)
+    {
+        fighter1->blockedAttack();
     }
 
 
@@ -201,8 +226,7 @@ void doGameTick(double dt)
     if (fighter2->position.x > 1040) {
         fighter2->position.x = 1040;
     }
-    if (fighter1->position.x + 55 > fighter2->position.x) {
-        sframes = 8;
+    if (fighter1->position.x + 55 > fighter2-> position.x) {
         fighter1->bump();
         fighter2->bump();
     }
