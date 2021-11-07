@@ -12,7 +12,7 @@ struct box {
 };
 
 struct fighter {
-	float health = 100;
+	float health = 100.0f;
 
 	//position
 	glm::vec2 position;

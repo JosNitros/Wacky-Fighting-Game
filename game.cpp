@@ -3,8 +3,8 @@
 #define WALKSPEED 5.0
 #define RUNSPEED 7.0
 
-fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
-fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
+fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f), false);
+fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f), true);
 double timer = 99;
 bool over = false;
 
@@ -19,7 +19,6 @@ bool detect_hit2(fighter* fighter1, fighter* fighter2) {
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    auto animations = getAnimations();
     if (action == GLFW_PRESS && !over)
     {
         switch (key) {
@@ -158,8 +157,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+int sframes = 0;
 void doGameTick(double dt)
 {
+    if (sframes > 0) sframes--;
+
     if (over)
     {
         if (fighter1->health <= 0.0)
@@ -186,22 +188,41 @@ void doGameTick(double dt)
     fighter2->update();
 
     if (fighter1->blocking) {
-        fighter1->stopFrames = 6;
+        fighter1->stopFrames = 2;
     }
     if (fighter2->blocking) {
-        fighter2->stopFrames = 6;
+        fighter2->stopFrames = 2;
     }
+
+    if (fighter1->blockedATK)
+    {
+        if (fighter1->af == 3 * 4)
+        {
+            fighter1->setAnim(getAnimations().at("idle"));
+        }
+    }
+
+    if (fighter2->blockedATK)
+    {
+        if (fighter2->af == 3 * 4)
+        {
+            fighter2->setAnim(getAnimations().at("idle"));
+        }
+    }
+    
 
     bool hit2 = detect_hit1(fighter1, fighter2) && fighter1->attacking;
     bool hit1 = detect_hit2(fighter1, fighter2) && fighter2->attacking;
 
     if (hit2 && !fighter2->blocking && !fighter2->parrying)
     {
+        sframes = 8;
         fighter2->hit();
     }
 
     if (hit1 && !fighter1->blocking && !fighter1->parrying)
     {
+        sframes = 8;
         fighter1->hit();
     }
 
@@ -223,6 +244,7 @@ void doGameTick(double dt)
         fighter2->position.x = 1040;
     }
     if (fighter1->position.x + 55 > fighter2-> position.x) {
+        sframes = 8;
         fighter1->bump();
         fighter2->bump();
     }
@@ -252,6 +274,11 @@ void doGameTick(double dt)
 
         over = true;
     }
+}
+
+int getShakeFrames()
+{
+    return sframes;
 }
 
 double getTimer()

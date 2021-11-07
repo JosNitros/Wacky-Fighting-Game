@@ -165,6 +165,7 @@ void fighter::update() {
 
 void fighter::setAnim(animSequence* animS)
 {
-		anim = animS;
-		af = 0;
+	anim = animS;
+	af = 0;
+	blockedATK = false;
 }

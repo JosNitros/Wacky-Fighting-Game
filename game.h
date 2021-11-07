@@ -10,6 +10,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void doGameTick(double dt);
 
+int getShakeFrames();
+
 double getTimer();
 
 bool getOver();
