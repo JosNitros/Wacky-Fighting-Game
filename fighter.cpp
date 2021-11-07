@@ -31,17 +31,17 @@ void fighter::attack()
 		velocity.x = 0.0f;
 		if (facingLeft)
 		{
-			hitbox.position.x -= 150;
+			//hitbox.dimensions.x = 230;
+			//hitbox.dimensions.y = 100;
+			//hitbox.position.x -= 150;
 			hurtbox.position.x -= 90;
 
-			hitbox.dimensions.x = 230;
-			hitbox.dimensions.y = 100;
 			hurtbox.dimensions.x = 170;
 		}
 		else
 		{
-			hitbox.dimensions.x = 230;
-			hitbox.dimensions.y = 100;
+			//hitbox.dimensions.x = 230;
+			//hitbox.dimensions.y = 100;
 			hurtbox.dimensions.x = 170;
 		}
 
@@ -77,6 +77,7 @@ void fighter::hit()
 		}
 
 		isHit = true;
+		attacking = false;
 		health -= 10.0f;
 		setAnim(getAnimations().at("takehitW"));
 		stopFrames = 4 * 4;
@@ -99,6 +100,21 @@ void fighter::update() {
 	position += velocity;
 	if (stopFrames > 1)
 	{
+		if (attacking && facingLeft && stopFrames == 20) {
+			hitbox.position.x -= 150;
+		}
+
+		if (attacking && facingLeft && stopFrames <= 20) {
+			hitbox.dimensions.x = 230;
+			hitbox.dimensions.y = 100;
+		}
+
+		if (attacking && !facingLeft && stopFrames <= 20) {
+			hitbox.dimensions.x = 230;
+			hitbox.dimensions.y = 100;
+		}
+
+
 		stopFrames--;
 	}
 	else if (stopFrames == 1)
