@@ -12,9 +12,12 @@ struct box {
 };
 
 struct fighter {
+	float health = 100;
+
 	//position
 	glm::vec2 position;
-	box hitbox = box(glm::vec2(0.0f), glm::vec2(0.0f));
+	bool facingLeft = false;
+	box hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
 	box hurtbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(80.0f, 100.0f));
 	glm::vec2 velocity = glm::vec2(0.0f);
 
@@ -33,7 +36,7 @@ struct fighter {
 
 	unsigned int stopFrames = 0;
 
-	fighter(glm::vec2 position);
+	fighter(glm::vec2 position, bool facingleft);
 
 	void move(glm::vec2 vel);
 
