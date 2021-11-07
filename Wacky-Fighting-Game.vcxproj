@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="fighter.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="libs\include\glad\glad.h" />
@@ -161,7 +162,6 @@
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
-    <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\animation.fs" />
