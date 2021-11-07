@@ -1,8 +1,7 @@
 #include <iostream>
 #include <thread>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
 
 #include "game.h"
 #include "render.h"
@@ -32,6 +31,8 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
+    //glfwSetKeyCallBack(window,)
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
