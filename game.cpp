@@ -188,11 +188,28 @@ void doGameTick(double dt)
     fighter2->update();
 
     if (fighter1->blocking) {
-        fighter1->stopFrames = 6;
+        fighter1->stopFrames = 2;
     }
     if (fighter2->blocking) {
-        fighter2->stopFrames = 6;
+        fighter2->stopFrames = 2;
     }
+
+    if (fighter1->blockedATK)
+    {
+        if (fighter1->af == 3 * 4)
+        {
+            fighter1->setAnim(getAnimations().at("idle"));
+        }
+    }
+
+    if (fighter2->blockedATK)
+    {
+        if (fighter2->af == 3 * 4)
+        {
+            fighter2->setAnim(getAnimations().at("idle"));
+        }
+    }
+    
 
     bool hit2 = detect_hit1(fighter1, fighter2) && fighter1->attacking;
     bool hit1 = detect_hit2(fighter1, fighter2) && fighter2->attacking;
@@ -227,6 +244,7 @@ void doGameTick(double dt)
         fighter2->position.x = 1040;
     }
     if (fighter1->position.x + 55 > fighter2-> position.x) {
+        sframes = 8;
         fighter1->bump();
         fighter2->bump();
     }
