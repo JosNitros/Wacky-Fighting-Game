@@ -1,9 +1,9 @@
 #include "game.h"
 #include "fighter.h"
 
-fighter* fighter1 = new fighter(glm::vec2(10.0f, 10.0f), glm::vec2(10.0f, 10.0f));
+fighter* fighter1 = new fighter(glm::vec2(10.0f, 10.0f));
 
-fighter* fighter2 = new fighter(glm::vec2(10.0f, 10.0f), glm::vec2(10.0f, 10.0f));
+fighter* fighter2 = new fighter(glm::vec2(10.0f, 10.0f));
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {

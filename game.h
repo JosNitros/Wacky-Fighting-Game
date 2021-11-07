@@ -6,6 +6,8 @@
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-void doGameTick(double dt);
+void doGameTick(double dt) {
+	;
+}
 
 #endif
