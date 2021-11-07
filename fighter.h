@@ -47,6 +47,8 @@ struct fighter {
 
 	void blockedAttack();
 
+	void grab();
+
 	void bump();
 
 	void hit();

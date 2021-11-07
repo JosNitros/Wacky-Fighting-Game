@@ -91,6 +91,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             case GLFW_KEY_I:
                 fighter2->attack();
                 break;
+
+            case GLFW_KEY_E:
+                fighter1->grab();
+                break;
+
+            case GLFW_KEY_O:
+                fighter2->grab();
+                break;
         }
     }
     else if (action == GLFW_RELEASE && !over)
@@ -209,10 +217,10 @@ void doGameTick(double dt)
             fighter2->setAnim(getAnimations().at("idle"));
         }
     }
-    
 
-    bool hit2 = detect_hit1(fighter1, fighter2) && fighter1->attacking;
-    bool hit1 = detect_hit2(fighter1, fighter2) && fighter2->attacking;
+
+    bool hit2 = detect_hit1(fighter1, fighter2) && (fighter1->attacking ||fighter1->grabbing) ;
+    bool hit1 = detect_hit2(fighter1, fighter2) && (fighter2->attacking ||fighter2->grabbing) ;
 
     if (hit2 && !fighter2->blocking && !fighter2->parrying)
     {
@@ -226,14 +234,22 @@ void doGameTick(double dt)
         fighter1->hit();
     }
 
-    if (hit2 && fighter2->blocking)
+    if (hit2 && fighter2->blocking && !fighter1->grabbing)
     {
         fighter2->blockedAttack();
     }
 
-    if (hit1 && fighter1->blocking)
+    if (hit1 && fighter1->blocking && !fighter2->grabbing)
     {
         fighter1->blockedAttack();
+    }
+    if (hit1 && fighter2->grabbing)
+    {
+        fighter1->hit();
+    }
+    if (hit2 && fighter1->grabbing)
+    {
+        fighter2->hit();
     }
 
 
