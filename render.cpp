@@ -59,8 +59,23 @@ void initRenderer()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-unsigned int tf1 = 0;
-unsigned int tf2 = 0;
+void drawBox(box& obj, glm::vec4 color)
+{
+	auto shader = getShaders()->at("box");
+
+	shader.use();
+
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(obj.position, 0.0f));
+	model = glm::scale(model, glm::vec3(obj.dimensions, 1.0f));
+
+	shader.setMat4("model", model);
+
+	shader.setVec4("color", color);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 void drawGame()
 {
 	auto shaders = getShaders();
@@ -78,8 +93,18 @@ void drawGame()
 	renderText(font, shaders->at("text"), "Cum", 300, 300, 1280, 720, 2.0, glm::vec3(1.0));
 
 	glBindVertexArray(VAO);
-	animations.at("run")->draw(tf1, p1->position, glm::vec2(400.0f, 400.0f), 0);
-	animations.at("run")->draw(tf2, p2->position, glm::vec2(400.0f, 400.0f), 3);
+	p1->draw(0);
+	p2->draw(3);
+	
+	box tmp = box(p1->hitbox.position + p1->position, p1->hitbox.dimensions);
+	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
+	tmp = box(p2->hitbox.position + p2->position, p2->hitbox.dimensions);
+	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
+
+	tmp = box(p1->hurtbox.position + p1->position, p1->hurtbox.dimensions);
+	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
+	tmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
+	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glFinish();

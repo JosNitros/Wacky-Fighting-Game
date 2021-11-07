@@ -166,6 +166,8 @@
   <ItemGroup>
     <None Include="shaders\animation.fs" />
     <None Include="shaders\animation.vs" />
+    <None Include="shaders\box.fs" />
+    <None Include="shaders\box.vs" />
     <None Include="shaders\image.fs" />
     <None Include="shaders\image.vs" />
     <None Include="shaders\screen.fs" />
