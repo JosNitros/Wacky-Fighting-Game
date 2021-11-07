@@ -113,6 +113,9 @@ void fighter::update() {
 			hitbox.dimensions.x = 230;
 			hitbox.dimensions.y = 100;
 		}
+		if (attacking && stopFrames <= 15) {
+			hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
+		}
 
 
 		stopFrames--;
