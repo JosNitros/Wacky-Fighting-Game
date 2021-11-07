@@ -33,6 +33,7 @@ struct fighter {
 	bool blocking = false;
 	bool parrying = false;
 	bool grabbing = false;
+	bool blockedATK = false;
 
 	unsigned int stopFrames = 0;
 
@@ -43,6 +44,8 @@ struct fighter {
 	void attack();
 
 	void block();
+
+	void blockedAttack();
 
 	void bump();
 
