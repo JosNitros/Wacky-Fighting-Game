@@ -22,14 +22,13 @@ unsigned int VAO, VBO, FBO;
 unsigned int FBOtexture;
 
 std::map<GLchar, Char> font;
-animSequence tmpA;
-unsigned int tf = 0;
 void initRenderer()
 {
 	font = loadFont("assets/fonts/Lato/Lato-Black.ttf");
 
 	compileShaders();
 	loadTextures();
+	loadAnimations();
 
 	
 	glGenBuffers(1, &VBO);
@@ -56,26 +55,15 @@ void initRenderer()
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, FBOtexture, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	auto texture = &getTextures()->at("attack1");
-	frame* tmp = new frame(texture, 0, 6);
-	tmpA.sequence.push_back(tmp);
-	tmp = new frame(texture, 1, 6);
-	tmpA.sequence.push_back(tmp);
-	tmp = new frame(texture, 2, 6);
-	tmpA.sequence.push_back(tmp);
-	tmp = new frame(texture, 3, 6);
-	tmpA.sequence.push_back(tmp);
-	tmp = new frame(texture, 4, 6);
-	tmpA.sequence.push_back(tmp);
-	tmp = new frame(texture, 5, 6);
-	tmpA.sequence.push_back(tmp);
 }
 
+unsigned int tf1 = 0;
+unsigned int tf2 = 0;
 void drawGame()
 {
 	auto shaders = getShaders();
 	auto textures = getTextures();
+	auto animations = getAnimations();
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	glClearColor(1.0f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -85,7 +73,8 @@ void drawGame()
 	renderText(font, shaders->at("text"), "Cum", 300, 300, 1280, 720, 2.0, glm::vec3(1.0));
 
 	glBindVertexArray(VAO);
-	tmpA.draw(tf, glm::vec2(100.0f, 100.0f), glm::vec2(400.0f, 400.0f));
+	animations.at("attack2")->draw(tf1, glm::vec2(100.0f, 100.0f), glm::vec2(400.0f, 400.0f), 2);
+	animations.at("attack2")->draw(tf2, glm::vec2(100.0f, 300.0f), glm::vec2(400.0f, 400.0f), 1);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glFinish();
