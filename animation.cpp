@@ -7,7 +7,7 @@
 frame::frame(texture2D* image, unsigned int cframe, unsigned int frames) :
 	image(image), cframe(cframe), frames(frames) {}
 
-void frame::draw(glm::vec2 pos, glm::vec2 scale)
+void frame::draw(glm::vec2 pos, glm::vec2 scale, int flags)
 {
 	auto shader = getShaders()->at("animation");
 	shader.use();
@@ -23,6 +23,7 @@ void frame::draw(glm::vec2 pos, glm::vec2 scale)
 	model = glm::scale(model, glm::vec3(scale, 1.0f));
 
 	shader.setMat4("model", model);
+	shader.setInt("flags", flags);
 	
 	glBindTexture(GL_TEXTURE_2D, image->ID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -33,31 +34,108 @@ void animSequence::update(unsigned int& curFrame)
 	++curFrame %= sequence.size() * 4;
 }
 
-void animSequence::draw(unsigned int& curFrame, glm::vec2 pos, glm::vec2 scale)
+void animSequence::draw(unsigned int& curFrame, glm::vec2 pos, glm::vec2 scale, int flags)
 {
-	sequence[floor(curFrame / 4.0)]->draw(pos, scale);
+	sequence[floor(curFrame / 4.0)]->draw(pos, scale, flags);
 	update(curFrame);
 }
 
+#define ATTACK1_FRAMES 6
+#define ATTACK2_FRAMES 6
+#define DEATH_FRAMES 6
+#define FALL_FRAMES 2
+#define IDLE_FRAMES 8
+#define JUMP_FRAMES 2
+#define RUN_FRAMES 8
+#define TAKEHIT_FRAMES 4
+#define TAKEHITW_FRAMES 4
 std::map<std::string, animSequence*> animations;
 void loadAnimations()
 {
 	auto textures = getTextures();
-	auto attack1 = &textures->at("attack1");
+
+	texture2D* anim = &textures->at("attack1");
 	animSequence* tmpA = new animSequence();
-	frame* tmp = new frame(attack1, 0, 6);
-	tmpA->sequence.push_back(tmp);
-	tmp = new frame(attack1, 1, 6);
-	tmpA->sequence.push_back(tmp);
-	tmp = new frame(attack1, 2, 6);
-	tmpA->sequence.push_back(tmp);
-	tmp = new frame(attack1, 3, 6);
-	tmpA->sequence.push_back(tmp);
-	tmp = new frame(attack1, 4, 6);
-	tmpA->sequence.push_back(tmp);
-	tmp = new frame(attack1, 5, 6);
-	tmpA->sequence.push_back(tmp);
+	frame* tmp;
+	for (unsigned int i = 0; i < ATTACK1_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, ATTACK1_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
 	animations.insert(std::pair<std::string, animSequence*>("attack1", tmpA));
+
+	anim = &textures->at("attack2");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < ATTACK2_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, ATTACK2_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("attack2", tmpA));
+
+	anim = &textures->at("death");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < DEATH_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, DEATH_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("death", tmpA));
+
+	anim = &textures->at("fall");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < FALL_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, FALL_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("fall", tmpA));
+
+	anim = &textures->at("idle");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < IDLE_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, IDLE_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("idle", tmpA));
+
+	anim = &textures->at("jump");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < JUMP_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, JUMP_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("jump", tmpA));
+
+	anim = &textures->at("run");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < RUN_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, RUN_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("run", tmpA));
+
+	anim = &textures->at("takehit");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < TAKEHIT_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, TAKEHIT_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("takehit", tmpA));
+
+	anim = &textures->at("takehitW");
+	tmpA = new animSequence();
+	for (unsigned int i = 0; i < TAKEHITW_FRAMES; i++)
+	{
+		tmp = new frame(anim, i, TAKEHITW_FRAMES);
+		tmpA->sequence.push_back(tmp);
+	}
+	animations.insert(std::pair<std::string, animSequence*>("takehitW", tmpA));
+
 }
 
 std::map<std::string, animSequence*>& getAnimations()

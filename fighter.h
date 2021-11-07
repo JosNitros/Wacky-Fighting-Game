@@ -1,20 +1,24 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 
+#include "animation.h"
+
 struct box {
-	glm::vec2 positions;
+	glm::vec2 position;
 	glm::vec2 dimensions;
-	box(glm::vec2 startingPos, glm::vec2 dim) : positions(startingPos), dimensions(dim) {};
+	box(glm::vec2 pos, glm::vec2 dim) : position(pos), dimensions(dim) {};
 };
 
 struct fighter {
 	//position
-	glm::vec2 startingposition;
-	box hitbox = box(startingposition, glm::vec2(0.0f, 0.0f));
-	box hurtbox = box(startingposition, glm::vec2(10.0f, 10.0f));
-	glm::vec2 velocity = glm::vec2(10.0f, 10.0f);
+	glm::vec2 position;
+	box hitbox = box(glm::vec2(0.0f), glm::vec2(0.0f));
+	box hurtbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(80.0f, 100.0f));
+	glm::vec2 velocity = glm::vec2(0.0f);
 
-
+	unsigned int af = 0;
+	animSequence* anim = nullptr;
+	
 	//states
 	bool idle = true;
 
@@ -32,18 +36,29 @@ struct fighter {
 	bool parrying = false;
 	bool grabbing = false;
 
-	fighter(glm::vec2 startingposition) : startingposition(startingposition){};
+	fighter(glm::vec2 position) : position(position) {};
+
+	void draw(int flags)
+	{
+		if (anim)
+		{
+			anim->draw(af, position, glm::vec2(400.0f), flags);
+		}
+		else
+		{
+			anim = getAnimations().at("idle");
+		}
+	}
 
 	void move() {
-		hitbox.positions += velocity;
-		hurtbox.positions += velocity;
+		position += velocity;
 	}
 
 	void setAllFalse() {
 		idle = false;
 		walk = false;
 		run = false;
-		shift = false;
+		
 		isHit = false;
 		attacking = false;
 		blocking = false;

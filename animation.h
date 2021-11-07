@@ -16,7 +16,7 @@ struct frame
 
 	frame(texture2D* image, unsigned int cframe, unsigned int frames);
 
-	void draw(glm::vec2 pos, glm::vec2 scale);
+	void draw(glm::vec2 pos, glm::vec2 scale, int flags = 0);
 };
 
 struct animSequence
@@ -25,7 +25,7 @@ struct animSequence
 
 	void update(unsigned int& curFrame);
 
-	void draw(unsigned int& curFrame, glm::vec2 pos, glm::vec2 scale);
+	void draw(unsigned int& curFrame, glm::vec2 pos, glm::vec2 scale, int flags = 0);
 };
 
 void loadAnimations();
