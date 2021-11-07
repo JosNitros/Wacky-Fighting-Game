@@ -5,14 +5,16 @@
 
 fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
 fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
-double timer = 90;
+double timer = 99;
 
 bool detect_hit1(fighter* fighter1, fighter* fighter2) {
-    return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x && fighter1->hitbox.dimensions.y > 0);
+    return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x
+        && fighter1->hitbox.dimensions.y > 0);
 }
 
 bool detect_hit2(fighter* fighter1, fighter* fighter2) {
-    return (fighter2->position.x + fighter2->hitbox.position.x <= fighter1->position.x + fighter1->hurtbox.position.x + fighter1->hurtbox.dimensions.x && fighter2->hitbox.dimensions.y > 0);
+    return (fighter2->position.x + fighter2->hitbox.position.x <= fighter1->position.x + fighter1->hurtbox.position.x + fighter1->hurtbox.dimensions.x 
+        && fighter2->hitbox.dimensions.y > 0);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -147,8 +149,29 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+bool over = false;
 void doGameTick(double dt)
 {
+    if (over)
+    {
+        if (fighter1->health <= 0.0)
+        {
+            if (fighter1->af == (4 * 6) - 1)
+            {
+                fighter1->af = (4 * 6) - 2;
+            }
+        }
+
+        if (fighter2->health <= 0.0)
+        {
+            if (fighter2->af == (4 * 6) - 1)
+            {
+                fighter2->af = (4 * 6) - 2;
+            }
+        }
+        return;
+    }
+
     timer -= 1.0 / 60.0;
 
     fighter1->update();
@@ -165,6 +188,31 @@ void doGameTick(double dt)
     if (hit1)
     {
         fighter1->hit();
+    }
+
+    if (fighter1->health <= 0.0 || fighter2->health <= 0.0 || timer <= 0.0)
+    {
+        timer = 0.0;
+
+        if (fighter1->health <= 0.0)
+        {
+            fighter1->setAnim(getAnimations().at("death"));
+        }
+        else
+        {
+            fighter1->setAnim(getAnimations().at("idle"));
+        }
+
+        if (fighter2->health <= 0.0)
+        {
+            fighter2->setAnim(getAnimations().at("death"));
+        }
+        else
+        {
+            fighter2->setAnim(getAnimations().at("idle"));
+        }
+
+        over = true;
     }
 }
 
