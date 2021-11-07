@@ -151,14 +151,17 @@ void doGameTick(double dt)
     fighter1->update();
     fighter2->update();
 
-    if (detect_hit1(fighter1, fighter2) && fighter1->attacking) {
-        fighter2->isHit = true;
-        fighter2->health -= 10.0f;
+    bool hit2 = detect_hit1(fighter1, fighter2) && fighter1->attacking;
+    bool hit1 = detect_hit2(fighter1, fighter2) && fighter2->attacking;
+
+    if (hit2)
+    {
+        fighter2->hit();
     }
 
-    if (detect_hit2(fighter1, fighter2) && fighter2->attacking) {
-        fighter1->isHit = true;
-        fighter1->health -= 10.0f;
+    if (hit1)
+    {
+        fighter1->hit();
     }
 }
 

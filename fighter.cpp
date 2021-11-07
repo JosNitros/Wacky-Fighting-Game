@@ -61,6 +61,28 @@ void fighter::block()
 	}
 }
 
+void fighter::hit()
+{
+	if (!isHit)
+	{
+		if (facingLeft)
+		{
+			position += glm::vec2(70.0f, 0.0);
+			velocity.x = 0.0f;
+		}
+		else
+		{
+			position -= glm::vec2(70.0f, 0.0);
+			velocity.x = 0.0f;
+		}
+
+		isHit = true;
+		health -= 10.0f;
+		setAnim(getAnimations().at("takehitW"));
+		stopFrames = 4 * 4;
+	}
+}
+
 void fighter::draw(int flags)
 {
 	if (anim)
@@ -87,6 +109,7 @@ void fighter::update() {
 		setAnim(getAnimations().at("idle"));
 		attacking = false;
 		blocking = false;
+		isHit = false;
 	}
 }
 
