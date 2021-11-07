@@ -132,7 +132,7 @@ void drawGame()
 	p1->draw(0);
 	p2->draw(3);
 	
-	/*
+	
 	box tmp = box(p1->hitbox.position + p1->position, p1->hitbox.dimensions);
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 0.5));
 	tmp = box(p2->hitbox.position + p2->position, p2->hitbox.dimensions);
@@ -142,9 +142,9 @@ void drawGame()
 	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
 	tmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
 	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
-	*/
+	
 
-	box tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
+	tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
 
 	tmp = box(glm::vec2(1280.0f - 500.0f * (p2->health / 100.0f), 0.0f), glm::vec2(500.0f * (p2->health / 100.0f), 75.0f));
