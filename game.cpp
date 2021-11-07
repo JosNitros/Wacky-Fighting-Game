@@ -189,6 +189,19 @@ void doGameTick(double dt)
         fighter1->hit();
     }
 
+
+    if (fighter1->position.x < -160) {
+        fighter1->position.x = -160;
+    }
+    if (fighter2->position.x > 1040) {
+        fighter2->position.x = 1040;
+    }
+    if (fighter1->position.x + 80 > fighter2-> position.x) {
+        fighter1->bump();
+        fighter2->bump();
+    }
+
+
     if (fighter1->health <= 0.0 || fighter2->health <= 0.0 || timer <= 0.0)
     {
         timer = 0.0;

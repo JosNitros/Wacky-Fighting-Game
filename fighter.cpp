@@ -61,6 +61,22 @@ void fighter::block()
 	}
 }
 
+void fighter::bump()
+{
+	if (stopFrames == 0) {
+		velocity.x = 0.0f;
+		setAnim(getAnimations().at("takehit"));
+		if (!facingLeft) {
+			position += glm::vec2(-40.0f, 0.0f);
+			
+		}
+		else {
+			position += glm::vec2(40.0f, 0.0f);
+		}
+		stopFrames = 16;
+	}
+}
+
 void fighter::hit()
 {
 	if (!isHit)
@@ -101,17 +117,20 @@ void fighter::update() {
 	if (stopFrames > 1)
 	{
 		if (attacking && facingLeft && stopFrames == 20) {
-			hitbox.position.x -= 150;
+			hitbox.position.x -= 140;
 		}
 
 		if (attacking && facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 230;
+			hitbox.dimensions.x = 220;
 			hitbox.dimensions.y = 100;
 		}
 
 		if (attacking && !facingLeft && stopFrames <= 20) {
-			hitbox.dimensions.x = 230;
+			hitbox.dimensions.x = 220;
 			hitbox.dimensions.y = 100;
+		}
+		if (attacking && stopFrames <= 15) {
+			hitbox = box(glm::vec2(160.0f, 145.0f), glm::vec2(0.0f));
 		}
 
 
