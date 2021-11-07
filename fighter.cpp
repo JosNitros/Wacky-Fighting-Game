@@ -73,7 +73,7 @@ void fighter::grab()
 		}
 
 		setAnim(getAnimations().at("attack1"));
-		stopFrames = 40;
+		stopFrames = 38;
 	}
 }
 
@@ -99,7 +99,7 @@ void fighter::blockedAttack()
 		else {
 			position += glm::vec2(40.0f, 0.0f);
 		}
-		stopFrames = 16;
+		stopFrames = 13;
 		blockedATK = true;
 }
 
@@ -140,7 +140,7 @@ void fighter::hit()
 		parrying = false;
 		health -= 10.0f;
 		setAnim(getAnimations().at("takehitW"));
-		stopFrames = 4 * 4;
+		stopFrames = 20;
 	}
 }
 
