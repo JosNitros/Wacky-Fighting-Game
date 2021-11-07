@@ -123,6 +123,13 @@ void drawGame()
 	tmp = box(p2->hurtbox.position + p2->position, p2->hurtbox.dimensions);
 	drawBox(tmp, glm::vec4(0.0, 1.0, 0.0, 0.5));
 
+
+	tmp = box(glm::vec2(0.0f), glm::vec2(500.0f * (p1->health / 100.0f), 75.0f));
+	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
+
+	tmp = box(glm::vec2(1280.0f - 500.0f * (p2->health / 100.0f), 0.0f), glm::vec2(500.0f * (p2->health / 100.0f), 75.0f));
+	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glFinish();
 }

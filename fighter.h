@@ -44,6 +44,8 @@ struct fighter {
 
 	void block();
 
+	void hit();
+
 	void draw(int flags);
 
 	void update();
