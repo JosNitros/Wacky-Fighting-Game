@@ -1,4 +1,6 @@
-#include <stdlib.h>
+#ifndef FIGHTER_H
+#define FIGHTER_H
+
 #include <glm/glm.hpp>
 
 #include "animation.h"
@@ -18,14 +20,7 @@ struct fighter {
 
 	unsigned int af = 0;
 	animSequence* anim = nullptr;
-	
-	//states
-	bool idle = true;
 
-	bool walk = false;
-
-	//states for running
-	bool run = false;
 	bool shift = false;
 	
 	bool isHit = false;
@@ -36,38 +31,20 @@ struct fighter {
 	bool parrying = false;
 	bool grabbing = false;
 
-	fighter(glm::vec2 position) : position(position) {};
+	unsigned int stopFrames = 0;
 
-	void draw(int flags)
-	{
-		if (anim)
-		{
-			anim->draw(af, position, glm::vec2(400.0f), flags);
-		}
-		else
-		{
-			anim = getAnimations().at("idle");
-		}
-	}
+	fighter(glm::vec2 position);
 
-	void move() {
-		position += velocity;
-	}
+	void move(glm::vec2 vel);
 
-	void setAllFalse() {
-		idle = false;
-		walk = false;
-		run = false;
-		
-		isHit = false;
-		attacking = false;
-		blocking = false;
-		parrying = false;
-		grabbing = false;
-	}
+	void attack();
 
-	void reverseDirection() {
-		velocity *= -1;
-	}
+	void block();
 
+	void draw(int flags);
+
+	void update();
+
+	void setAnim(animSequence* animS);
 };
+#endif

@@ -10,6 +10,7 @@
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="fighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />

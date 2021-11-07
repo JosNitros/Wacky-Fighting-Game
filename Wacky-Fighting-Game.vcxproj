@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="fighter.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="libs\include\glad\glad.c" />
     <ClCompile Include="main.cpp" />
