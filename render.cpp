@@ -107,6 +107,23 @@ void drawGame()
 	fighter* p1 = getPlayer1();
 	fighter* p2 = getPlayer2();
 
+	if (getOver())
+	{
+		renderText(font, shaders->at("text"), "Game Over", 363, 300, 1280, 720, 2.5, glm::vec3(0.6f, 0.0f, 0.0f));
+
+		if ((p1->health <= 0.0 && p2->health <= 0.0) || p1->health == p2->health)
+		{
+			renderText(font, shaders->at("text"), "Tie", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+		}
+		else if (p1->health < p2->health)
+		{
+			renderText(font, shaders->at("text"), "Player 2 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+		}
+		else
+		{
+			renderText(font, shaders->at("text"), "Player 1 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+		}
+	}
 	//renderText(font, shaders->at("text"), "Cool pile", 300, 300, 1280, 720, 2.0, glm::vec3(1.0f));
 
 	renderText(font, shaders->at("text"), std::to_string((int)(getTimer())), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));

@@ -12,6 +12,8 @@ void doGameTick(double dt);
 
 double getTimer();
 
+bool getOver();
+
 fighter* getPlayer1();
 fighter* getPlayer2();
 
