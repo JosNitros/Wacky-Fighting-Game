@@ -107,7 +107,9 @@ void drawGame()
 	fighter* p1 = getPlayer1();
 	fighter* p2 = getPlayer2();
 
-	renderText(font, shaders->at("text"), "Cum", 300, 300, 1280, 720, 2.0, glm::vec3(1.0));
+	renderText(font, shaders->at("text"), "Cum pile", 300, 300, 1280, 720, 2.0, glm::vec3(1.0f));
+
+	renderText(font, shaders->at("text"), std::to_string((int)(getTimer())), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));
 
 	glBindVertexArray(VAO);
 	p1->draw(0);
@@ -137,6 +139,8 @@ void drawGame()
 void render()
 {
 	auto shaders = getShaders();
+	shaders->at("box").use();
+	shaders->at("box").setFloat("time", glfwGetTime());
 	drawGame();
 
 	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);

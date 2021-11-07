@@ -5,6 +5,7 @@
 
 fighter* fighter1 = new fighter(glm::vec2(-100.0f, 385.0f),false);
 fighter* fighter2 = new fighter(glm::vec2(975.0f, 385.0f),true);
+double timer = 90;
 
 bool detect_hit1(fighter* fighter1, fighter* fighter2) {
     return (fighter1->position.x + fighter1->hitbox.position.x + fighter1->hitbox.dimensions.x >= fighter2->position.x + fighter2->hurtbox.position.x);
@@ -148,6 +149,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void doGameTick(double dt)
 {
+    timer -= 1.0 / 60.0;
+
     fighter1->update();
     fighter2->update();
 
@@ -163,6 +166,11 @@ void doGameTick(double dt)
     {
         fighter1->hit();
     }
+}
+
+double getTimer()
+{
+    return timer;
 }
 
 fighter* getPlayer1()

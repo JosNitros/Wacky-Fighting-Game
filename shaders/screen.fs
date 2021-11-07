@@ -8,5 +8,7 @@ uniform sampler2D scene;
 
 void main()
 {
-    FragColor = texture(scene, texCoords);
+    float dm = 1.7 - distance(gl_FragCoord.xy / 1280.0, vec2(0.5)) * 2.0;
+    vec4 vig = vec4(dm, dm, dm, 1.0);
+    FragColor = texture(scene, texCoords) * vig;
 }
