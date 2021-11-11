@@ -24,6 +24,12 @@ unsigned int VAO, VBO, FBO;
 unsigned int FBOtexture;
 
 std::map<GLchar, Char> font;
+shader* textShader;
+shader* boxShader;
+shader* screenShader;
+shader* imageShader;
+
+unsigned int background;
 void initRenderer()
 {
 	font = loadFont("assets/fonts/Lato/Lato-Black.ttf");
@@ -32,6 +38,14 @@ void initRenderer()
 	loadTextures();
 	loadAnimations();
 
+	//shaders map will never change so using a pointer to them is okay
+	auto shaders = getShaders();
+	textShader = &shaders->at("text");
+	boxShader = &shaders->at("box");
+	screenShader = &shaders->at("screen");
+	imageShader = &shaders->at("image");
+
+	background = getTextures()->at("background").ID;
 	
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
@@ -61,42 +75,35 @@ void initRenderer()
 
 void drawBox(box& obj, glm::vec4 color)
 {
-	auto shader = getShaders()->at("box");
-
-	shader.use();
+	boxShader->use();
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(obj.position, 0.0f));
 	model = glm::scale(model, glm::vec3(obj.dimensions, 1.0f));
 
-	shader.setMat4("model", model);
+	boxShader->setMat4("model", model);
 
-	shader.setVec4("color", color);
+	boxShader->setVec4("color", color);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void drawBG()
 {
-	auto bg = getTextures()->at("background");
-	auto shdr = getShaders()->at("image");
-
-	shdr.use();
+	imageShader->use();
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(1280.0f, 720, 1.0f));
 
-	shdr.setMat4("model", model);
+	imageShader->setMat4("model", model);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, bg.ID);
+	glBindTexture(GL_TEXTURE_2D, background);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void drawGame()
 {
-	auto shaders = getShaders();
-	auto textures = getTextures();
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	glClearColor(1.0f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -108,24 +115,24 @@ void drawGame()
 
 	if (getOver())
 	{
-		renderText(font, shaders->at("text"), "Game Over", 363, 300, 1280, 720, 2.5, glm::vec3(0.6f, 0.0f, 0.0f));
+		renderText(font, *textShader, "Game Over", 363, 300, 1280, 720, 2.5, glm::vec3(0.6f, 0.0f, 0.0f));
 
 		if ((p1->health <= 0.0 && p2->health <= 0.0) || p1->health == p2->health)
 		{
-			renderText(font, shaders->at("text"), "Tie", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+			renderText(font, *textShader, "Tie", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
 		}
 		else if (p1->health < p2->health)
 		{
-			renderText(font, shaders->at("text"), "Player 2 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+			renderText(font, *textShader, "Player 2 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
 		}
 		else
 		{
-			renderText(font, shaders->at("text"), "Player 1 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
+			renderText(font, *textShader, "Player 1 Wins", 363, 400, 1280, 720, 2.5, glm::vec3(0.7f, 0.0f, 0.0f));
 		}
 	}
 	//renderText(font, shaders->at("text"), "Cool pile", 300, 300, 1280, 720, 2.0, glm::vec3(1.0f));
 
-	renderText(font, shaders->at("text"), std::to_string((int)(getTimer()) + 1), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));
+	renderText(font, *textShader, std::to_string((int)(getTimer()) + 1), 363, 100, 1280, 720, 2.5, glm::vec3(0.9f));
 
 	glBindVertexArray(VAO);
 	p1->draw(0);
@@ -153,29 +160,28 @@ void drawGame()
 	drawBox(tmp, glm::vec4(1.0, 0.0, 0.0, 1.0));
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glFinish();
+	glFlush();
 }
 
 int flags = 0;
 void render()
 {
-	auto shaders = getShaders();
-	shaders->at("box").use();
-	shaders->at("box").setFloat("time", glfwGetTime());
+	boxShader->use();
+	boxShader->setFloat("time", glfwGetTime());
 	drawGame();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	shaders->at("screen").use();
+	screenShader->use();
 
-	shaders->at("screen").setInt("flags", flags | (getShakeFrames() > 0));
-	shaders->at("screen").setFloat("time", glfwGetTime());
+	screenShader->setInt("flags", flags | (getShakeFrames() > 0));
+	screenShader->setFloat("time", glfwGetTime());
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::scale(model, glm::vec3(1280.0f, 720, 1.0f));
+	model = glm::scale(model, glm::vec3(1280.0f, 720.0f, 1.0f));
 
-	shaders->at("screen").setMat4("model", model);
+	screenShader->setMat4("model", model);
 
 	glBindVertexArray(VAO);
 	glBindTexture(GL_TEXTURE_2D, FBOtexture);

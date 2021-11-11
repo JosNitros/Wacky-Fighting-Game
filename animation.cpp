@@ -31,12 +31,12 @@ void frame::draw(glm::vec2 pos, glm::vec2 scale, int flags)
 
 void animSequence::update(unsigned int& curFrame)
 {
-	++curFrame %= sequence.size() * 4;
+	++curFrame %= sequence.size() << 2;
 }
 
 void animSequence::draw(unsigned int& curFrame, glm::vec2 pos, glm::vec2 scale, int flags)
 {
-	sequence[floor(curFrame / 4.0)]->draw(pos, scale, flags);
+	sequence[curFrame >> 2]->draw(pos, scale, flags);
 	update(curFrame);
 }
 
@@ -82,15 +82,6 @@ void loadAnimations()
 	}
 	animations.insert(std::pair<std::string, animSequence*>("death", tmpA));
 
-	anim = &textures->at("fall");
-	tmpA = new animSequence();
-	for (unsigned int i = 0; i < FALL_FRAMES; i++)
-	{
-		tmp = new frame(anim, i, FALL_FRAMES);
-		tmpA->sequence.push_back(tmp);
-	}
-	animations.insert(std::pair<std::string, animSequence*>("fall", tmpA));
-
 	anim = &textures->at("idle");
 	tmpA = new animSequence();
 	for (unsigned int i = 0; i < IDLE_FRAMES; i++)
@@ -99,15 +90,6 @@ void loadAnimations()
 		tmpA->sequence.push_back(tmp);
 	}
 	animations.insert(std::pair<std::string, animSequence*>("idle", tmpA));
-
-	anim = &textures->at("jump");
-	tmpA = new animSequence();
-	for (unsigned int i = 0; i < JUMP_FRAMES; i++)
-	{
-		tmp = new frame(anim, i, JUMP_FRAMES);
-		tmpA->sequence.push_back(tmp);
-	}
-	animations.insert(std::pair<std::string, animSequence*>("jump", tmpA));
 
 	anim = &textures->at("run");
 	tmpA = new animSequence();

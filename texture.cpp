@@ -38,12 +38,12 @@ texture2D loadTextureFromFile(const char* file, bool alpha)
     if (alpha)
     {
         texture.Internal_Format = GL_RGBA;
-        texture.Image_Format = GL_RGBA;
+        texture.Image_Format = GL_COMPRESSED_RGBA;
     }
     else
     {
         texture.Internal_Format = GL_RGB;
-        texture.Image_Format = GL_RGB;
+        texture.Image_Format = GL_COMPRESSED_RGB;
     }
     // load image
     int width, height, nrChannels;
@@ -71,7 +71,7 @@ texture2D loadTextureFromFile(const char* file, bool alpha)
     glBindTexture(GL_TEXTURE_2D, 0);
     // free image data
     stbi_image_free(data);
-
+ 
     return texture;
 }
 
@@ -87,14 +87,8 @@ void loadTextures()
     thang = loadTextureFromFile("assets/Martial-Hero/Sprites/Death.png", true);
     textures.insert(std::pair<std::string, texture2D>("death", thang));
 
-    thang = loadTextureFromFile("assets/Martial-Hero/Sprites/Fall.png", true);
-    textures.insert(std::pair<std::string, texture2D>("fall", thang));
-
     thang = loadTextureFromFile("assets/Martial-Hero/Sprites/Idle.png", true);
     textures.insert(std::pair<std::string, texture2D>("idle", thang));
-
-    thang = loadTextureFromFile("assets/Martial-Hero/Sprites/Jump.png", true);
-    textures.insert(std::pair<std::string, texture2D>("jump", thang));
 
     thang = loadTextureFromFile("assets/Martial-Hero/Sprites/Run.png", true);
     textures.insert(std::pair<std::string, texture2D>("run", thang));
