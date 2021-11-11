@@ -4,5 +4,4 @@
 void initRenderer();
 
 void render();
-
 #endif

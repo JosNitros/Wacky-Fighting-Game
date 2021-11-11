@@ -1,8 +1,6 @@
 #include <iostream>
 #include <thread>
 
-
-
 #include "game.h"
 #include "render.h"
 
@@ -43,34 +41,27 @@ int main()
     int frames = 0;
     int fps = 0;
 
-    double gameTime = glfwGetTime();
-    double frameTimer = gameTime;
-    double nowTime = gameTime;
+    double frameTimer = glfwGetTime();
+    double nowTime = frameTimer;
 
-    double dt = 0;
-    const float dtMod = 1.0f;
     while (!glfwWindowShouldClose(window))
     {
 
         nowTime = glfwGetTime();
 
-        dt = (nowTime - gameTime);
-        dt *= dtMod;
-        if (dt > 1)
-            dt = 1; //this limit prevents teleporting through walls
-        gameTime = nowTime;
-
         if (nowTime - frameTimer >= 1)
         {
             frameTimer += 1;
-            fps = frames;
 
+            #ifdef _DEBUG
+            fps = frames;
             std::cout << fps << '\n';
+            #endif
 
             frames = 0;
         }
 
-        doGameTick(dt);
+        doGameTick();
         render();
 
         glfwSwapBuffers(window);

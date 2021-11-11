@@ -205,7 +205,7 @@ void restart()
     over = false;
 }
 
-void doGameTick(double dt)
+void doGameTick()
 {
     if (sframes > 0) sframes--;
 
@@ -355,7 +355,6 @@ fighter* getPlayer1()
 {
     return fighter1;
 }
-
 
 fighter* getPlayer2()
 {
